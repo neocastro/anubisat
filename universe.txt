@@ -1,0 +1,94 @@
+
+> f = And (Iff (Symbol "p") (Not (Symbol "q"))) (Implies (Symbol "r") (Or (Symbol "s") (Symbol "t")))
+> universe f 
+> [
+>     And (Iff (Symbol "p") (Not (Symbol "q"))) (Implies (Symbol "r") (Or (Symbol "s") (Symbol "t")))
+>   ,      Iff (Symbol "p") (Not (Symbol "q"))
+>   ,      Symbol "p"
+>   ,                        Not (Symbol "q")
+>   ,                             Symbol "q"
+>   ,                                            Implies (Symbol "r") (Or (Symbol "s") (Symbol "t"))
+>   ,                                                     Symbol "r"
+>   ,                                                                  Or (Symbol "s") (Symbol "t")
+>   ,                                                                      Symbol "s"
+>   ,                                                                                   Symbol "t"
+> ]
+
+
+universe ((True' <--> Not True') && (True' --> (True' || True')))
+[
+  And (Iff True' (Not True')) (Implies True' (Or True' True')),
+       Iff True' (Not True'),
+           True',
+                 Not True',
+                     True', 
+                              Implies True' (Or True' True'),
+                                      True',
+                                            Or True' True',
+                                               True',
+                                                     True'
+]
+
+universeOf termSubterms f
+[
+  And (Iff (Symbol "p") (Not (Symbol "q"))) (Implies (Symbol "r") (Or (Symbol "s") (Symbol "t"))),
+      Iff (Symbol "p") (Not (Symbol "q")),
+          Symbol "p",
+                       Not (Symbol "q"),
+                            Symbol "q",
+                                            Implies (Symbol "r") (Or (Symbol "s") (Symbol "t")),
+                                                     Symbol "r",
+                                                                 Or (Symbol "s") (Symbol "t"),
+                                                                     Symbol "s",
+                                                                                  Symbol "t"
+]
+
+f = And (Iff (Symbol "p") (Not (Symbol "q"))) (Implies (Symbol "r") (Or (Symbol "s") T))
+
+universe f ^@.. folded
+[
+  (0, And (Iff (Symbol "p") (Not (Symbol "q")))    (Implies (Symbol "r") (Or (Symbol "s") T))),
+  (1,      Iff (Symbol "p") (Not (Symbol "q"))),
+  (2,           Symbol "p"),
+  (3,                       Not (Symbol "q")),
+  (4,                            Symbol "q"),
+  (5,                                               Implies (Symbol "r")   (Or (Symbol "s") T)),
+  (6,                                                        Symbol "r"),
+  (7,                                                                       Or (Symbol "s")    T),
+  (8,                                                                           Symbol "s"),
+  (9,                                                                                          T)
+]
+
+f = Not (And (Symbol "p") (Or (Symbol "q") (Symbol "r")))
+universe f ^@..folded
+
+[ (0,Not (And (Symbol "p") (Or (Symbol "q") (Symbol "r")))), --> (Not p1 || Not )
+  (1,     And (Symbol "p") (Or (Symbol "q") (Symbol "r"))),
+  (2,          Symbol "p"),
+  (3,                      Or (Symbol "q") (Symbol "r")),
+  (4,                          Symbol "q"),
+  (5,                                        Symbol "r")
+]
+
+f = And (Not (And (Symbol "p") (Or (Symbol "q") (Symbol "r")))) (Or (Symbol "s") (Symbol "t"))
+universe f ^@..folded
+
+> [
+>   (0,And (Not (And (Symbol "p") (Or (Symbol "q") (Symbol "r")))) (Or (Symbol "s") (Symbol "t"))),
+>   (1,     Not (And (Symbol "p") (Or (Symbol "q") (Symbol "r")))),
+>   (2,          And (Symbol "p") (Or (Symbol "q") (Symbol "r"))),
+>   (3,               Symbol "p"),
+>   (4,                            Or (Symbol "q") (Symbol "r")),
+>   (5,                                Symbol "q"),
+>   (6,                                             Symbol "r"),
+>   (7,                                                             Or (Symbol "s") (Symbol "t")),
+>   (8,                                                                 Symbol "s"),
+>   (9,                                                                              Symbol "t")
+> ]
+
+universe f ^@..folded . _And
+
+> [ (0,(Not (And (Symbol "p") (Or (Symbol "q") (Symbol "r"))),Or (Symbol "s") (Symbol "t"))),
+>   (2,(Symbol "p",Or (Symbol "q") (Symbol "r")))
+> ]
+

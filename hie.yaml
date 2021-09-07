@@ -1,0 +1,9 @@
+cradle:
+  stack:
+    stackYaml: "stack.yaml"
+    components:
+      - path: "./src"
+        component: "anubisat:lib"
+
+      - path: "./test"
+        component: "anubisat:test:anubisat-test"

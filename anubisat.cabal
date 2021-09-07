@@ -1,76 +1,87 @@
-cabal-version:       2.4
-name:                anubisat
-version:             0.0.0.0
-synopsis:            See README for more info
+cabal-version:   2.4
+name:            anubisat
+version:         0.0.0.0
+synopsis:        See README for more info
 description:
-    See README for more info.
-    See [README.md](https://github.com/neocastro/anubisat#anubisat) for more details.
-homepage:            https://github.com/neocastro/anubisat
-bug-reports:         https://github.com/neocastro/anubisat/issues
-license:             MIT
-license-file:        LICENSE
-author:              Yuri Carvalho
-maintainer:          Yuri Carvalho <yuri.carvalho@alumni.usp.br>
-copyright:           2021 Yuri Carvalho
-build-type:          Simple
-extra-doc-files:     README.md
-                     CHANGELOG.md
-tested-with:         GHC == 8.8.4
-                     GHC == 8.10.3
+  See README for more info.
+  See [README.md](https://github.com/neocastro/anubisat#anubisat) for more details.
+
+homepage:        https://github.com/neocastro/anubisat
+bug-reports:     https://github.com/neocastro/anubisat/issues
+license:         MIT
+license-file:    LICENSE
+author:          Yuri Carvalho
+maintainer:      Yuri Carvalho <yuri.carvalho@alumni.usp.br>
+copyright:       2021 Yuri Carvalho
+build-type:      Simple
+extra-doc-files:
+  CHANGELOG.md
+  README.md
+
+tested-with:     GHC ==8.8.4 || ==8.10.3
 
 source-repository head
-  type:                git
-  location:            https://github.com/neocastro/anubisat.git
+  type:     git
+  location: https://github.com/neocastro/anubisat.git
 
 common common-options
-  build-depends:       base >= 4.13.0.0 && < 4.15
+  build-depends:
+    , base-noprelude  ^>=4.13.0.0
+    , cond
+    , lens
+    , relude
 
-  ghc-options:         -Wall
-                       -Wcompat
-                       -Widentities
-                       -Wincomplete-uni-patterns
-                       -Wincomplete-record-updates
-                       -Wredundant-constraints
-                       -Wnoncanonical-monad-instances
-  if impl(ghc >= 8.2)
-    ghc-options:       -fhide-source-paths
-  if impl(ghc >= 8.4)
-    ghc-options:       -Wmissing-export-lists
-                       -Wpartial-fields
-  if impl(ghc >= 8.8)
-    ghc-options:       -Wmissing-deriving-strategies
-                       -fwrite-ide-info
-                       -hiedir=.hie
-  if impl(ghc >= 8.10)
-    ghc-options:       -Wunused-packages
+  ghc-options:
+    -Wall -Wcompat -Widentities -Wincomplete-uni-patterns
+    -Wincomplete-record-updates -Wredundant-constraints
+    -Wnoncanonical-monad-instances
 
-  default-language:    Haskell2010
-  default-extensions:  ConstraintKinds
-                       DeriveGeneric
-                       GeneralizedNewtypeDeriving
-                       InstanceSigs
-                       KindSignatures
-                       LambdaCase
-                       NoImplicitPrelude
-                       OverloadedStrings
-                       RecordWildCards
-                       ScopedTypeVariables
-                       StandaloneDeriving
-                       TupleSections
-                       TypeApplications
-                       ViewPatterns
+  if impl(ghc >=8.2)
+    ghc-options: -fhide-source-paths
+
+  if impl(ghc >=8.4)
+    ghc-options: -Wmissing-export-lists -Wpartial-fields
+
+  if impl(ghc >=8.8)
+    ghc-options: -Wmissing-deriving-strategies -fwrite-ide-info -hiedir=.hie
+
+  if impl(ghc >=8.10)
+    ghc-options: -Wunused-packages
+
+  default-language:   Haskell2010
+  default-extensions:
+    ConstraintKinds
+    DeriveDataTypeable
+    DeriveGeneric
+    GeneralizedNewtypeDeriving
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    OverloadedStrings
+    RecordWildCards
+    ScopedTypeVariables
+    StandaloneDeriving
+    TemplateHaskell
+    TupleSections
+    TypeApplications
+    ViewPatterns
 
 library
-  import:              common-options
-  hs-source-dirs:      src
-  exposed-modules:     Anubisat
+  import:          common-options
+  hs-source-dirs:  src
+  exposed-modules:
+    Anubisat
+    Prelude
+
+-- other-modules:   Prelude
 
 test-suite anubisat-test
-  import:              common-options
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             Spec.hs
-  build-depends:       anubisat
-  ghc-options:         -threaded
-                       -rtsopts
-                       -with-rtsopts=-N
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        Spec.hs
+  build-depends:
+    , anubisat
+    , hspec
+
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
